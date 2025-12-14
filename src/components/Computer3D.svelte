@@ -51,7 +51,7 @@
     </T.Mesh>
 
     <!-- Screen Area -->
-    <T.Mesh position.z={screenDepth / 2 + 1.01} >
+    <T.Mesh position.z={screenDepth / 2 + 1.01} position.y={0}>
       <T.PlaneGeometry args={[screenWidth, screenHeight ]} />
       <T.MeshBasicMaterial color="#000000" />
 
@@ -102,8 +102,8 @@
 
 <style>
   .screen-content {
-    width: 800px;
-    height: 600px;
+    width: 990px;
+    height: 700px;
     background-color: #000000;
     color: #3ae682;
     font-family: "像素", monospace;
@@ -113,7 +113,8 @@
     justify-content: center;
     align-items: center;
     border: 2px solid #333;
-    top: -40px;
+    left:10px;
+    top: -10px;
     border: none;
   }
 
