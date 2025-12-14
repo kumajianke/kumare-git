@@ -25,7 +25,7 @@
 <div class="login-content">
   <div class="login-title">
     <div>Validate Terminal</div>
-    
+
     <span class="sub-title">Login By {active_mode}</span>
   </div>
 
@@ -41,7 +41,12 @@
         <Button width={"500px"} style="full">传递神经递质</Button>
       </div>
     {:else if active_mode === mode.email}
-      <Input width={500} placeholder="输入邮箱地址" />
+      <div class="input-with-btn">
+        <Input width={500} placeholder="输入邮箱地址" />
+        <div on:mousedown={() => {}}>
+          <Button >发送验证码</Button>
+        </div>
+      </div>
       <div
         on:mousedown={() => {
           console.log("你好");
@@ -80,7 +85,13 @@
   .login-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 40px;
     margin: 60px 0;
+  }
+  .input-with-btn {
+    display: flex;
+    text-wrap: nowrap;
+    gap: 20px;
+    height: 60px;
   }
 </style>
