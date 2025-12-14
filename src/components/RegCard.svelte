@@ -42,12 +42,12 @@
     <div class="btn-with-input">
       <Input width={400} input_type="email" placeholder="数据回传邮箱" bind:value={email} />
       <div on:mousedown={() => {}}>
-        <Button>数据回传</Button>
+        <Button>上传 Webshell</Button>
       </div>
     </div>
 
-    <Input width={500} input_type="password" placeholder="管理员密钥" bind:value={password} />
-    <Input width={500} input_type="password" placeholder="管理员密钥" bind:value={okay_password} />
+    <Input width={500} input_type="password" placeholder="输入回显的 Root 密钥" bind:value={password} />
+    <Input width={500} input_type="password" placeholder="注入用户密钥" bind:value={okay_password} />
 
     <div on:mousedown={() => {}}>
       <Button width={"500px"}>访客权限注入</Button>

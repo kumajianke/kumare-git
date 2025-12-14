@@ -31,7 +31,7 @@
 
   <div class="login-form">
     {#if active_mode === mode.password}
-      <Input width={500} placeholder="远程木马名称" />
+      <Input width={500} placeholder="僵尸网络节点 ID / 回显邮箱地址" />
       <Input width={500} input_type="password" placeholder="RSA文件密钥" />
       <div
         on:mousedown={() => {
