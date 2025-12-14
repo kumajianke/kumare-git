@@ -38,9 +38,7 @@
   }
   let Computer3D: OrbitControls | undefined = $state();
 
-  const great_position = $state([
-    0.84, -1.01, 18.86,
-  ]);
+  const great_position = $state([0.84, -1.01, 18.86]);
 
   let showLockConfirm = $state(false);
   let isLocked = $state(false);
@@ -58,7 +56,7 @@
       );
 
       const unsub = t.subscribe((p) => {
-        goPoint(p)
+        goPoint(p);
       });
 
       await t.set(great_position);
@@ -83,8 +81,9 @@
     showLockConfirm = false;
   }
 
-  function goPoint(pos){
-if (Computer3D) {
+  //@ts-ignore
+  function goPoint(pos) {
+    if (Computer3D) {
       // 1. 获取被控制的相机 (通常是 default camera)
       //@ts-ignore
       const camera = Computer3D.object;
@@ -94,8 +93,6 @@ if (Computer3D) {
     }
   }
 </script>
-
-
 
 <div class="content-computer-3d">
   <T.AmbientLight intensity={3} />
@@ -133,36 +130,40 @@ if (Computer3D) {
         <T.MeshBasicMaterial color="#000000" />
 
         <!-- HTML Content on Screen -->
-      <HTML transform position.z={0.01} occlude="blending">
-        <div class="screen-content">
-          <!-- CRT Overlay -->
-          <div class="crt-overlay"></div>
-          
-          {#if showLockConfirm}
-            <div class="modal-overlay">
-              <div class="modal-box">
-                <div class="lock-title">是否锁定视角？</div>
-                <div class="lock-buttons">
-                  <div on:mousedown={lockView} class="lock-btn confirm">是</div>
-                  <div on:mousedown={cancelLock} class="lock-btn cancel">否</div>
+        <HTML transform position.z={0.01} occlude="blending">
+          <div class="screen-content">
+            <!-- CRT Overlay -->
+            <div class="crt-overlay"></div>
+
+            {#if showLockConfirm}
+              <div class="modal-overlay">
+                <div class="modal-box">
+                  <div class="lock-title">是否锁定视角？</div>
+                  <div class="lock-buttons">
+                    <div on:mousedown={lockView} class="lock-btn confirm">
+                      是
+                    </div>
+                    <div on:mousedown={cancelLock} class="lock-btn cancel">
+                      否
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          {/if}
+            {/if}
 
-          <div class="content-wrapper">
+            <div class="content-wrapper">
               {#if currentView === "menu"}
                 <div class="menu-view">
                   <div class="menu-title">
-                    > Hello, World
+                    > Hacklo World
                     <div class="blink">_</div>
                   </div>
                   <div class="menu-buttons">
                     <div on:mousedown={goLogin}>
-                      <Button onClick={goLogin} style="full">登 录</Button>
+                      <Button onClick={goLogin} style="full">定向入侵</Button>
                     </div>
                     <div on:mousedown={goReg}>
-                      <Button onClick={goReg} style="border">注 册</Button>
+                      <Button onClick={goReg} style="border">SQL 注入</Button>
                     </div>
 
                     <div
@@ -360,7 +361,7 @@ if (Computer3D) {
 
   .modal-box {
     background: #010104;
-    border: 2px solid #3AE682;
+    border: 2px solid #3ae682;
     padding: 30px;
     border-radius: 10px;
     text-align: center;
@@ -368,7 +369,7 @@ if (Computer3D) {
   }
 
   .lock-title {
-    color: #3AE682;
+    color: #3ae682;
     font-size: 1.5rem;
     margin-bottom: 20px;
   }
@@ -382,17 +383,17 @@ if (Computer3D) {
   .lock-btn {
     padding: 8px 25px;
     cursor: pointer;
-    border: 1px solid #3AE682;
-    color: #3AE682;
+    border: 1px solid #3ae682;
+    color: #3ae682;
     transition: all 0.3s;
   }
 
   .lock-btn:hover {
-    background: #3AE682;
+    background: #3ae682;
     color: #010104;
   }
 
-  .content-computer-3d{
+  .content-computer-3d {
     user-select: none;
   }
 </style>

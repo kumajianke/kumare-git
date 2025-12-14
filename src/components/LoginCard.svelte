@@ -31,20 +31,20 @@
 
   <div class="login-form">
     {#if active_mode === mode.password}
-      <Input width={500} placeholder="请输入用户名" />
-      <Input width={500} input_type="password" placeholder="请输入密码" />
+      <Input width={500} placeholder="远程木马名称" />
+      <Input width={500} input_type="password" placeholder="RSA文件密钥" />
       <div
         on:mousedown={() => {
           console.log("你好");
         }}
       >
-        <Button width={"500px"} style="full">传递神经递质</Button>
+        <Button width={"500px"} style="full">远程木马提权</Button>
       </div>
     {:else if active_mode === mode.email}
       <div class="input-with-btn">
-        <Input width={500} placeholder="输入邮箱地址" />
+        <Input width={500} placeholder="回传终端数据到指定邮箱..." />
         <div on:mousedown={() => {}}>
-          <Button >发送验证码</Button>
+          <Button >回传终端验证</Button>
         </div>
       </div>
       <div

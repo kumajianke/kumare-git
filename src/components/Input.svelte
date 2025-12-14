@@ -2,12 +2,13 @@
   interface Props {
     input_type?: string;
     width?: number;
-    placeholder?: string
+    placeholder?: string;
+    value: string
   }
-  let { input_type = "text", width = 200 ,placeholder=""} = $props();
+  let { value= $bindable(""), input_type = "text", width = 200 ,placeholder=""} = $props();
 </script>
 
-<input type={input_type} style:width="{width}px" class="input-self" {placeholder}/>
+<input type={input_type} bind:value={value} style:width="{width}px" class="input-self" {placeholder}/>
 
 <style lang="less">
   .input-self {
