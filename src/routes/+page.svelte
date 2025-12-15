@@ -31,7 +31,7 @@
 <audio src="/sound/sound.mp3" loop id="bgm-login" bind:this={bgm_login} ></audio>
 <div class="title-area"> 
   <div class="title">库玛工作室</div>
-  <div class="sub-title">码上云台</div>
+  <div class="sub-title">云上码台</div>
   <div class="codes">
     <div class="comments">// Made By KuMare</div>
     <div class="code-line">System.ready();</div>
@@ -42,9 +42,9 @@
     {#if is_login}
       <Button
         onClick={() => {
-          goto("/private");
+          goto("/private/home");
         }}
-        style="full">码上云台</Button
+        style="full">云上码台</Button
       >
     {:else}
       <Button onClick={() => {

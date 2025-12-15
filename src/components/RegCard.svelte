@@ -27,7 +27,16 @@
 
   let sql = $derived.by(()=>{
     return `INSERT INTO ${table_name} values (username, email, password) VALUES ('${username}', '${email}', '${password.slice(0, 1) + "***"}');`  
-  })
+  });
+
+  let comment = $state({
+    usernme:"用户名",
+    email:"邮箱",
+    password:"密码",
+    get_email_code:"获取验证码",
+  });
+
+  let show_comment = $state(false);
 </script>
 
 <div class="login-content">
@@ -64,6 +73,7 @@
     text-align: left;
   }
   .login-title {
+    user-select: none;
     font-family: "像素";
     .sub-title {
       font-size: 1rem !important;

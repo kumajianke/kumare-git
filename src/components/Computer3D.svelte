@@ -165,14 +165,13 @@
                     <div on:mousedown={goReg}>
                       <Button onClick={goReg} style="border">SQL 注入</Button>
                     </div>
-
                     <div
                       class="tips"
                       on:mousedown={() => {
                         goGreatPosition();
                       }}
                     >
-                      点击此处，进入最佳视角
+                      command-line > 点击此处进入【沉浸模式】 <span class="fast-blink">_</span>
                     </div>
                   </div>
                 </div>
@@ -201,6 +200,7 @@
 
 <style>
   .screen-content {
+    user-select: none;
     width: 990px;
     height: 700px;
     background-color: #000000;
@@ -334,11 +334,14 @@
     }
   }
 
+  .fast-blink {
+    animation: blink 1500ms steps(1) infinite;
+  }
+
   .tips {
     position: absolute;
     bottom: 50px;
     right: 50px;
-    animation: blink 1500ms steps(1) infinite;
     cursor: pointer;
 
     &:hover {

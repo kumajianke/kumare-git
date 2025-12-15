@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import Button from "./Button.svelte";
   import Input from "./Input.svelte";
   let mode = $state({
@@ -36,14 +37,17 @@
       <div
         on:mousedown={() => {
           console.log("你好");
+          localStorage.setItem("msyt-token", "123123"); 
+          goto("/private/home");
+
         }}
       >
-        <Button width={"500px"} style="full">远程木马提权</Button>
+        <Button width={"500px"} style="full" >远程木马提权</Button>
       </div>
     {:else if active_mode === mode.email}
       <div class="input-with-btn">
         <Input width={500} placeholder="回传终端数据到指定邮箱..." />
-        <div on:mousedown={() => {}}>
+        <div on:mousedown={() => {goto("/home")}}>
           <Button >回传终端验证</Button>
         </div>
       </div>
@@ -52,7 +56,7 @@
           console.log("你好");
         }}
       >
-        <Button width={"500px"} style="full">下载终端验证</Button>
+        <Button width={"500px"} style="full">权限缓存爆破</Button>
       </div>
     {/if}
 
