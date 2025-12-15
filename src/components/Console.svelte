@@ -1,14 +1,18 @@
 <script lang="ts">
-  import { getExecuteCommand, type CommandResult } from "$lib/command";
+  import { getExecuteCommand } from "$lib/command";
   import ConsoleInput from "./ConsoleChildren/ConsoleInput.svelte";
   import Modal from "./Modal.svelte";
   import { activeWorkspace } from "$lib/bus";
+  import PassModal from "./PassModal.svelte";
+  import type {  Component } from "svelte";
+  import type { CommandResult } from "$lib/int/CommandResult";
 
   let command_input = $state("");
   let isDisActive = $derived($activeWorkspace !== 'console');
 
-  let modal_component = 
-  
+  let modal_component : Component = $state(PassModal);
+  let modal_title : string = $state("")
+  let modal_ctrl : boolean = $state(false);  
   let command_history_text: string[] = $state([]);
   let command_line_element: HTMLElement | undefined = $state();
 
@@ -33,12 +37,22 @@
     }
     
     // 展示组件
+    if(modify.components){
+      let {show_component, show_way} = modify.components;
+      if(show_way==="modal"){
+        modal_component = show_component;
+        activeWorkspace.set("modal")
+        modal_ctrl = true;
+        modal_title = modify.components.modal_title || "";
+      }
+    }
   }
   
   /**
    * 回车执行函数 获取对应的Handler信息
    * @param e
    */
+  //@ts-ignore
   async function handleEnter(e) {
     console.log(command_line_element);
 
@@ -64,10 +78,16 @@
     }
     
   }
+
+  $effect(()=>{
+    if(modal_ctrl === false){
+      activeWorkspace.set("console")
+    }
+  })
 </script>
 
-<Modal show={true}>
-  <svelte:component this={} />
+<Modal bind:show={modal_ctrl} title={modal_title}>
+  <svelte:component this={modal_component} />
 </Modal>
 <div class="console-content" bind:this={command_line_element}>
   <div class="command-lins-history">

@@ -1,18 +1,8 @@
 import type { Component, SvelteComponent } from "svelte"
 import TaskCreate from "../components/ConsoleChildren/TaskCreate.svelte";
+import type { CommandResult } from "./int/CommandResult";
 
-export interface CommandResult {
-    modify: {
-        command_history_text?: string[], // 对 command_history_text 的修正
-        components ?:{
-            show_component: Component, // 展示对应的组件
-            show_way: "modal" | "command"
-        }  
-    },
-    error?: {
-        error_message: string; // 报错信息
-    }
-}
+
 
 class Command {
     clear() {
@@ -31,7 +21,8 @@ class Command {
                 modify: {
                     components: {
                         show_component: TaskCreate,
-                        show_way: "modal"
+                        show_way: "modal",
+                        modal_title: "创建任务"
                     }
                 }
             }
