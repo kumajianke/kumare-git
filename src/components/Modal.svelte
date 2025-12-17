@@ -49,8 +49,7 @@
             
             <div class="modal-footer-decoration">
                 <div class="status-bar">
-                    <span>STATUS: ACTIVE</span>
-                    <span>MEM: OK</span>
+                    程序运行中...
                 </div>
             </div>
         </div>
