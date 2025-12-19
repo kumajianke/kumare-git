@@ -24,14 +24,28 @@
     onSelect = ()=>{},
   } = $props();
 
+  let input_element = $state();
   let isOpen = $state(false);
   let container: HTMLDivElement;
+  let dropdownNode: HTMLDivElement | undefined = $state();
   let finalWidth = $derived(!isNaN(Number(width)) ? width + "px" : width);
   let inputValue = $state("");
+  let activeHighlightIndex = $state(0);
 
   let filteredItems = $derived.by(() => {
     if (!inputValue) return items;
     return items.filter(i => i.toLowerCase().startsWith(inputValue.toLowerCase()));
+  });
+
+  $effect(() => {
+     // dependency on filteredItems length to reset index if needed, 
+     // but mainly when inputValue changes, filteredItems changes.
+     // We want to reset index when the list changes drastically, 
+     // but if we are just navigating, we don't want to reset.
+     // Actually, if filteredItems changes (due to input), we usually want to reset to 0.
+     filteredItems;
+     isOpen;
+     activeHighlightIndex = 0;
   });
 
   $effect(() => {
@@ -50,7 +64,61 @@
     value = inputValue; 
     isOpen = true; 
     if (onSelect) onSelect(inputValue); 
+    let input_element_as_html_input_element = input_element as HTMLInputElement;
+    if(input_element_as_html_input_element) input_element_as_html_input_element.focus();
   }
+
+  function handleBlur() {
+    isOpen = false;
+  }
+
+  function handleKeydown(e: KeyboardEvent) {
+    if (!isOpen) {
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+            isOpen = true;
+            activeHighlightIndex = 0;
+            e.preventDefault();
+        } else if (e.key === "Enter") {
+             // If closed and enter is pressed, maybe open? Or just submit?
+             // Usually Enter on input submits the form or does nothing if not open.
+             // If we want to support "open on enter", we can do it.
+             // But user requirement is "Select data ... using up/down keys".
+             // Let's stick to Arrow keys opening it.
+        }
+        return;
+    }
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      activeHighlightIndex = (activeHighlightIndex + 1) % filteredItems.length;
+      scrollToItem(activeHighlightIndex);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      activeHighlightIndex = (activeHighlightIndex - 1 + filteredItems.length) % filteredItems.length;
+      scrollToItem(activeHighlightIndex);
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (activeHighlightIndex >= 0 && activeHighlightIndex < filteredItems.length) {
+        select(filteredItems[activeHighlightIndex]);
+      }
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      isOpen = false;
+    }
+  }
+
+  function scrollToItem(index: number) {
+       // Use setTimeout to ensure DOM is updated if we were creating items (not the case here usually, just class change)
+       // But just in case
+       setTimeout(() => {
+         if (dropdownNode) {
+             const items = dropdownNode.querySelectorAll('.dropdown-item');
+             if (items[index]) {
+                 items[index].scrollIntoView({ block: 'nearest' });
+             }
+         }
+       }, 0);
+   }
 
   function select(item: string) {
     inputValue = item;
@@ -132,11 +200,15 @@
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div class="input-wrapper" onclick={toggle} class:active={isOpen}>
     <input
+    bind:this={input_element}
       type="text"
       bind:value={inputValue}
       oninput={handleInput}
       {placeholder}
       class="selector-input"
+      onfocus={handleInput}
+      onkeydown={handleKeydown}
+      onblur={handleBlur}
     />
     <div class="input-icon" class:rotated={isOpen}>
       <svg
@@ -152,14 +224,20 @@
   </div>
 
   {#if isOpen}
-    <div class="dropdown-list dropdown-list-portal" use:portal transition:slide={{ duration: 150 }}>
+    <div class="dropdown-list dropdown-list-portal" 
+      bind:this={dropdownNode} 
+      use:portal 
+      transition:slide={{ duration: 150 }}
+      onmousedown={(e) => e.preventDefault()}
+    >
       {#if filteredItems.length > 0}
-        {#each filteredItems as item}
+        {#each filteredItems as item, index}
           <!-- svelte-ignore a11y_click_events_have_key_events -->
           <!-- svelte-ignore a11y_no_static_element_interactions -->
           <div
             class="dropdown-item"
             class:selected={item === value}
+            class:highlighted={index === activeHighlightIndex}
             onclick={() => select(item)}
           >
             {@html highlightMatch(item, inputValue)}
@@ -290,7 +368,8 @@
     }
 
     &:hover,
-    &.selected {
+    &.selected,
+    &.highlighted {
       background: rgba(0, 255, 0, 0.1);
       color: #ffffff;
       padding-left: 16px; // Slight movement effect

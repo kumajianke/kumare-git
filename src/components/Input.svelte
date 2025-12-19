@@ -32,7 +32,6 @@
   .input-self {
     user-select: none;
     height: 1rem;
-    margin-bottom: 2rem;
     padding: 25px 16px;
     box-sizing: border-box;
     border: 1px solid white;

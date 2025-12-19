@@ -33,6 +33,7 @@
   subtitle="// version α0.0.1"
   width="223px"
   items={[
+    
     {
       title: "我的任务",
       group: "task",
@@ -56,6 +57,18 @@
     {
       title: "新目立项",
       group: "project",
+    },
+    {
+      title: "搜索工作小组",
+      group: "group",
+    },
+    {
+      title: "创建工作小组",
+      group: "group",
+    },
+    {
+      title: "切换工作小组",
+      group: "group",
     },
     {
       title: "设置",

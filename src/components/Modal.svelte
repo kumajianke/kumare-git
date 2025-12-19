@@ -30,7 +30,7 @@
     <div class="modal-backdrop" transition:fade={{ duration: 200 }} >
         <div 
             class="modal-window" 
-            style:width={width}
+            style:min-width={width}
             transition:scale={{ duration: 300, start: 0.95 }}
             onclick={(e) => e.stopPropagation()}
         >
@@ -49,7 +49,7 @@
             
             <div class="modal-footer-decoration">
                 <div class="status-bar">
-                    程序运行中...
+                    任务权限已开启...
                 </div>
             </div>
         </div>

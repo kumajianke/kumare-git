@@ -86,7 +86,7 @@
   })
 </script>
 
-<Modal bind:show={modal_ctrl} title={modal_title}>
+<Modal bind:show={modal_ctrl} title={modal_title} width="500px">
   <svelte:component this={modal_component} />
 </Modal>
 <div class="console-content" bind:this={command_line_element}>
