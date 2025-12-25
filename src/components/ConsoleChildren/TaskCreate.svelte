@@ -1,4 +1,5 @@
 <script>
+  import { goto } from "$app/navigation";
   // @ts-nocheck
 
   // @ts-ignore
@@ -12,9 +13,21 @@
   let task_req = $state({
     task_title: "",
     difficulty: 0,
+    project_id:"",
+    tags: [],
+    process_type:""
   });
 
-  let tags = $state([]);
+
+  function saveTaskToEdit(){
+    // TODO 保存项目
+
+    localStorage.setItem("kumayuntai-task-edit", JSON.stringify(task_req));
+
+    goto("/private/editor")
+
+
+  }
 </script>
 
 <div class="form-task-create">
@@ -26,12 +39,12 @@
 
     <div class="group">
       <div class="label">* 所属项目</div>
-      <Selector width="100%" items={["Hello", "World"]} />
+      <Selector width="100%" items={["Hello", "World"]} bind:value={task_req.project_id} />
     </div>
 
     <div class="group">
       <div class="label">* 标签</div>
-      <Tags width="100%" items={tags} />
+      <Tags width="100%" bind:items={task_req.tags} />
     </div>
 
     <div class="group">
@@ -43,6 +56,7 @@
     <div class="group">
       <div class="label">* 流程类型</div>
       <Selector
+        bind:value={task_req.process_type}
         width="100%"
         items={[
           "一般任务开发流程",
@@ -55,7 +69,7 @@
 
     <div class="group">
       <div class="label">* 任务描述</div>
-      <Input width={"100%"} bind:value={task_req.task_title} auto_foucs />
+      <Button width="100%" style="full" onClick={saveTaskToEdit}>详情描述</Button>
     </div>
   </div>
 </div>
@@ -63,12 +77,13 @@
 
 <div class="content-btn">
   <Button onClickUp={() => {}} width="100%">保存草稿(仅本地) [ctrl + s]</Button>
-  <Button onClickUp={() => {}} width="100%" style="full">创建任务 [ctrl + enter]</Button>
+  <Button onClickUp={() => {}} width="100%" style="full"
+    >创建任务 [ctrl + enter]</Button
+  >
 </div>
 
 <style lang="less">
-
-  .content-btn{
+  .content-btn {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -86,12 +101,20 @@
       font-family: "像素";
     }
   }
+
   .task-items {
     display: flex;
     gap: 22px;
     flex-direction: column;
   }
+
   .form-task-create {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .input-with-btn {
     display: flex;
     flex-direction: row;
     gap: 20px;

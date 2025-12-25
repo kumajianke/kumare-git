@@ -6,7 +6,8 @@ export interface CommandResult {
         components ?: {
             show_component: Component, // 展示对应的组件
             modal_title ?: string, // 弹窗标题
-            show_way: "modal" | "command"
+            show_way: "modal" | "command" | "gui", // 展示方式
+            allow_return?: boolean, // Gui模式下是否允许返回
         }  
     },
     error?: {

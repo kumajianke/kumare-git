@@ -11,10 +11,15 @@
   let isDisActive = $derived($activeWorkspace !== 'console');
 
   let modal_component : Component = $state(PassModal);
+  let gui_component : Component = $state(PassModal);
+
   let modal_title : string = $state("")
-  let modal_ctrl : boolean = $state(false);  
+    
   let command_history_text: string[] = $state([]);
   let command_line_element: HTMLElement | undefined = $state();
+
+  let modal_ctrl : boolean = $state(false); // 是否展示模态框
+  let command_show= $state(true); // 是否展示命令行
 
   /**
    * 渲染Command对象返回的 CommandResult
@@ -44,6 +49,10 @@
         activeWorkspace.set("modal")
         modal_ctrl = true;
         modal_title = modify.components.modal_title || "";
+      }else if (show_way  === "gui"){
+        command_show = false;
+        gui_component = modify.components.show_component
+
       }
     }
   }
@@ -89,6 +98,14 @@
 <Modal bind:show={modal_ctrl} title={modal_title} width="500px">
   <svelte:component this={modal_component} />
 </Modal>
+
+{#if !command_show}
+  <div class="gui-content">
+    <svelte:component this={gui_component} />
+  </div>
+{/if}
+
+{#if command_show}
 <div class="console-content" bind:this={command_line_element}>
   <div class="command-lins-history">
     <pre class="acsii-art">
@@ -109,6 +126,7 @@
   <ConsoleInput on_keydown={handleEnter} bind:inputValue={command_input} bind:disabled={isDisActive} />
 </div>
 
+{/if}
 <style lang="less">
   .acsii-art {
     font-size: 1rem;
@@ -153,5 +171,11 @@
     /* For Firefox */
     scrollbar-width: thin;
     scrollbar-color: #00ff00 #001100;
+  }
+  .gui-content{
+    width: 90%;
+    margin: auto;
+    padding: 120px;
+    box-sizing: border-box;
   }
 </style>

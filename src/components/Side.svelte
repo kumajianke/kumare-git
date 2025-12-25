@@ -126,7 +126,9 @@
   {/if}
 
   <div class="menu-content">
-    <div class="alt-tip"><code>alt + r</code> enter the keyboard mode: {isKeyboardActive} </div>
+    <div class="alt-tip"><code>alt + g</code> enter the keyboard mode: {isKeyboardActive} </div>
+    <br>
+    <div class="alt-tip">界面模式选项</div>
     {#each Object.entries(groupedItems) as [groupName, groupItems]}
       <div class="group-header">
         // {groupName.toUpperCase()}

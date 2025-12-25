@@ -11,7 +11,7 @@
     }
 
     const handleGlobalKeydown = (event: KeyboardEvent) => {
-      if (event.altKey && event.code === "KeyR") {
+      if (event.altKey && event.code === "KeyG") {
         event.preventDefault();
         activeWorkspace.set("side");
       } else if (event.altKey && event.code === "KeyC") {
@@ -33,7 +33,6 @@
   subtitle="// version α0.0.1"
   width="223px"
   items={[
-    
     {
       title: "我的任务",
       group: "task",
@@ -59,6 +58,11 @@
       group: "project",
     },
     {
+      title: "文档编辑",
+      group: "project",
+      onClick: () => goto("/private/editor"),
+    },
+    {
       title: "搜索工作小组",
       group: "group",
     },
@@ -69,6 +73,11 @@
     {
       title: "切换工作小组",
       group: "group",
+    },
+
+    {
+      title: "命令行模式切换",
+      group: "setting",
     },
     {
       title: "设置",
@@ -83,7 +92,10 @@
 
 <style lang="less">
   .page-content {
-    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewport='0 0 10 10' style='fill:rgb( 159, 255, 199);font-size:10px;'><circle cx='5' cy='5' r='3'/></svg>") 5 5, auto !important;
+    cursor:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewport='0 0 10 10' style='fill:rgb( 159, 255, 199);font-size:10px;'><circle cx='5' cy='5' r='3'/></svg>")
+        5 5,
+      auto !important;
     position: absolute;
     top: 0;
     left: 223px;

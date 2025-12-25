@@ -38,6 +38,7 @@ let cumstor_width = $derived.by(()=>{
     width: fit-content;
     cursor: pointer;
     border-radius: 8px;
+    text-wrap: nowrap;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     box-sizing: border-box;

@@ -15,8 +15,23 @@ class Command {
         }
     }
 
-    task_create(){
-        return (ctx: any, command_args: string[]) : CommandResult => {
+    gui_task() {
+        console.log("task_gui")
+        return (ctx: any, command_args: string[]): CommandResult => {
+            return {
+                modify: {
+                    components: {
+                        show_component: TaskCreate,
+                        show_way: "gui",
+                        allow_return: true
+                    }
+                }
+            }
+        }
+    }
+
+    task_create() {
+        return (ctx: any, command_args: string[]): CommandResult => {
             return {
                 modify: {
                     components: {
@@ -33,9 +48,7 @@ class Command {
 export let command = [
     "task-list",
     "task-create",
-    "task-update",
-    "task-delete",
-    "task-detail",
+    "gui-task",
     "project-list",
     "project-create",
     "project-update",
@@ -48,12 +61,10 @@ export let command = [
 ]
 
 export let command_doc = {
-    "task-list": "获取所有的任务列表(参数[-u 用户名称] [-s 状态] [-p 项目名称] [-over 是否完成(boolean)])",
+    "gui_task": "使用界面管理task",
+
     "task-create": "创建一个任务(参数[-n 任务名称] [-p 项目名称] ",
-    "task-update": "更新指定任务(参数[-i 任务ID] [-n 新任务名称] [-d 新描述] [-s 新状态] [-p 新项目])",
-    "task-delete": "删除指定任务(参数[-i 任务ID])",
-    "task-detail": "查看任务详情(参数[-i 任务ID])",
-    "project-list": "获取所有项目列表",
+
     "project-create": "创建新项目(参数[-n 项目名称] [-d 项目描述])",
     "project-update": "更新指定项目(参数[-i 项目ID] [-n 新名称] [-d 新描述])",
     "project-delete": "删除指定项目(参数[-i 项目ID])",
