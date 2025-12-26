@@ -1,6 +1,7 @@
 import type { Component, SvelteComponent } from "svelte"
 import TaskCreate from "../components/ConsoleChildren/TaskCreate.svelte";
 import type { CommandResult } from "./int/CommandResult";
+import TaskGui from "../components/Gui/TaskGui.svelte";
 
 
 
@@ -21,7 +22,7 @@ class Command {
             return {
                 modify: {
                     components: {
-                        show_component: TaskCreate,
+                        show_component: TaskGui,
                         show_way: "gui",
                         allow_return: true
                     }
